@@ -33,31 +33,31 @@ public class UserController {
     }
 
     @GetMapping("/new")
-    public String addUser(@ModelAttribute("person") User user) {
+    public String getUserForm(@ModelAttribute("person") User user) {
         return "people/new";
     }
 
     @PostMapping()
     public String createUser(@ModelAttribute("person") @Valid User user,
                              BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return "people/new";
-
+        }
         userService.addUser(user);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
-    public String updateUserById(Model model, @PathVariable("id") int id) {
+    public String updateUserForm(Model model, @PathVariable("id") int id) {
         model.addAttribute("person", userService.getUserById(id));
         return "people/edit";
     }
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("person") @Valid User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return "people/edit";
-
+        }
         userService.updateUser(user);
         return "redirect:/people";
     }
