@@ -18,17 +18,17 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class UserController {
 
-    private final UserService personService;
+    private final UserService userService;
 
     @GetMapping()
     public String getUsers(ModelMap model) {
-        model.addAttribute("people", personService.getAllUsers());
+        model.addAttribute("people", userService.getAllUsers());
         return "people/index";
     }
 
     @GetMapping("/{id}")
     public String getUserById(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", personService.getUserById(id));
+        model.addAttribute("person", userService.getUserById(id));
         return "people/show";
     }
 
@@ -38,18 +38,18 @@ public class UserController {
     }
 
     @PostMapping()
-    public String add(@ModelAttribute("person") @Valid User user,
+    public String saveUser(@ModelAttribute("person") @Valid User user,
                       BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "people/new";
 
-        personService.addUser(user);
+        userService.addUser(user);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String updateUserById(Model model, @PathVariable("id") int id) {
-        model.addAttribute("person", personService.getUserById(id));
+        model.addAttribute("person", userService.getUserById(id));
         return "people/edit";
     }
 
@@ -58,13 +58,13 @@ public class UserController {
         if (bindingResult.hasErrors())
             return "people/edit";
 
-        personService.updateUser(user);
+        userService.updateUser(user);
         return "redirect:/people";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") int id) {
-        personService.removeUser(id);
+        userService.removeUser(id);
         return "redirect:/people";
     }
 }
