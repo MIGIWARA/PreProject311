@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @PostMapping()
-    public String saveUser(@ModelAttribute("person") @Valid User user,
-                      BindingResult bindingResult) {
+    public String createUser(@ModelAttribute("person") @Valid User user,
+                             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "people/new";
 
